@@ -73,7 +73,7 @@ function _hydro_prompt --on-event fish_prompt
                 string replace --regex -- '(.+)' '@\$1'
         )
 
-        test -z \"\$$_hydro_git\" && set --universal $_hydro_git \"\$branch \"
+        test -z \"\$$_hydro_git\" && set --universal $_hydro_git \"$hydro_symbol_git_branch\$branch \"
 
         ! command git diff-index --quiet HEAD 2>/dev/null ||
             count (command git ls-files --others --exclude-standard) >/dev/null && set info \"$hydro_symbol_git_dirty\"
@@ -128,10 +128,15 @@ function hydro_multiline --on-variable hydro_multiline
     end
 end && hydro_multiline
 
+
 set --query hydro_color_error || set --global hydro_color_error $fish_color_error
+
 set --query hydro_symbol_prompt || set --global hydro_symbol_prompt ❱
+set --query hydro_symbol_git_branch || set --global hydro_symbol_git_branch ""
 set --query hydro_symbol_git_dirty || set --global hydro_symbol_git_dirty •
 set --query hydro_symbol_git_ahead || set --global hydro_symbol_git_ahead ↑
 set --query hydro_symbol_git_behind || set --global hydro_symbol_git_behind ↓
+
 set --query hydro_multiline || set --global hydro_multiline false
+
 set --query hydro_cmd_duration_threshold || set --global hydro_cmd_duration_threshold 1000
